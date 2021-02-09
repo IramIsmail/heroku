@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "900163343716",
+    "firebase_url": "https://notifycheck-dfc1f.firebaseio.com",
+    "project_id": "notifycheck-dfc1f",
+    "storage_bucket": "notifycheck-dfc1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900163343716:android:3f0cd4868f02906c455671",
+        "android_client_info": {
+          "package_name": "com.application.ovichat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900163343716-egah73iqpp9j2m407d5jk91ps2gpv888.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAirIemslz9_6iVnkwoICMbeHNM_AvjP7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "900163343716-egah73iqpp9j2m407d5jk91ps2gpv888.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
