@@ -1,20 +1,20 @@
 package com.heroku.domain;
-import javax.persistence.Column;
+/*import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.Table;*/
 
-@Entity
-@Table(name="item_detail")
+//@Entity
+//@Table(name="item_detail")
 public class ItemDetail {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@Id
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;
 
-	@Column(name = "name")
+	//@Column(name = "name")
 	private String name;
 
 	public Long getId() {
