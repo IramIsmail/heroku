@@ -12,7 +12,7 @@ public class ItemDetail {
 	
 	//@Id
 	//@GeneratedValue(strategy = GenerationType.AUTO)
-	Long id;
+	 Long id;
 
 	//@Column(name = "name")
 	private String name;

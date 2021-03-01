@@ -21,6 +21,7 @@ public class FirebaseService {
 				FirebaseOptions options = FirebaseOptions.builder()
 						.setCredentials(GoogleCredentials.fromStream(serviceAccount))
 	                    .setDatabaseUrl("https://notifycheck-dfc1f.firebaseio.com").build();
+				
 	        if(FirebaseApp.getApps().isEmpty()){
 	            FirebaseApp.initializeApp(options);
 	        }
