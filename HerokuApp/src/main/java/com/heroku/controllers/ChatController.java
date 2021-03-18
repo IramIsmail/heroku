@@ -38,17 +38,14 @@ public class ChatController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getUser(@RequestBody User user) {
-		
 
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
-		/***
-		 * ----------------Save Message
-		 * @param message
-		 * @param req
-		 * @return
-		 */
-	
+
+	/***
+	 * ----------------Save Message
+	 */
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> save_messages(@RequestBody Message message, HttpServletRequest req) {
 		try {
@@ -64,30 +61,52 @@ public class ChatController {
 		}
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
-	
-	
+
 	/***
 	 * -------------Getting All Messages of a particular User
-	 * @throws ExecutionException 
-	 * @throws InterruptedException 
-	 * 
 	 */
-	@RequestMapping(value="all/{userId}",method = RequestMethod.GET)
-	public Map<String,Object> get_messages(@PathVariable Long userId , HttpServletRequest req) throws InterruptedException, ExecutionException {
-			return  operationService.getAllChatsOfUser(userId);
-	}
-		/***
-		 * Getting particular ContactUser Messages
-		 * @return 
-		 * @throws ExecutionException 
-		 * @throws InterruptedException 
-		 */
-	
-	@RequestMapping(value="{contactUserId}/{userId}",method = RequestMethod.GET)
-	public Map<String, Object> getContactUserChats(@PathVariable Long userId,@PathVariable Long contactUserId) throws InterruptedException, ExecutionException{
-		return operationService.getContactUserChats(userId,contactUserId);
-		
+	@RequestMapping(value = "all/{userId}", method = RequestMethod.GET)
+	public Map<String, Object> get_messages(@PathVariable Long userId, HttpServletRequest req)
+			throws InterruptedException, ExecutionException {
+
+		return operationService.getAllChatsOfUser(userId);
 	}
 
-	
+	/***
+	 * Getting particular ContactUser Messages
+	 */
+
+	@RequestMapping(value = "{contactUserId}/{userId}", method = RequestMethod.GET)
+	public Map<String, Object> getContactUserChats(@PathVariable Long userId, @PathVariable Long contactUserId)
+			throws InterruptedException, ExecutionException {
+		return operationService.getContactUserChats(userId, contactUserId);
+
+	}
+
+	/***
+	 * Delete particular Msg of a particular Contact
+	 */
+	@RequestMapping(value = "delete/{msgKey}/{msgId}", method = RequestMethod.GET)
+	public ResponseEntity<?> deleteParticularMsg(@PathVariable String msgKey, @PathVariable String msgId)
+			throws InterruptedException, ExecutionException {
+
+		if (operationService.deleteMsgById(msgKey, msgId))
+			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+		else
+			return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+	}
+
+	/***
+	 * Delete all Msgs of particular contact
+	 */
+	@RequestMapping(value = "delete/{msgId}", method = RequestMethod.GET)
+	public ResponseEntity<?> deleteAllContactMsgs(@PathVariable String msgId)
+			throws InterruptedException, ExecutionException {
+
+		if (operationService.deleteAllContactMsgs(msgId))
+			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+		else
+			return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+	}
+
 }

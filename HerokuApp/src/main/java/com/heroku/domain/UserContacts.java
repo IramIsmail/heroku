@@ -4,13 +4,27 @@ import java.util.List;
 
 public class UserContacts {
 	
+	Long id;
 	
-	List<String> contactsId;
-	public List<String> getContactsId() {
+	String contactsId;
+	
+	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getContactsId() {
 		return contactsId;
 	}
-	public void setContactsId(List<String> contactsId) {
+	public void setContactsId(String contactsId) {
 		this.contactsId = contactsId;
+	}
+	@Override
+	public String toString() {
+		return "UserContacts [contactsId=" + contactsId + "]";
 	}
 	
 	

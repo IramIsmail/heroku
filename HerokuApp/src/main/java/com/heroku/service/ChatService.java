@@ -16,6 +16,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.FieldValue;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -34,7 +35,7 @@ public class ChatService {
 
 	public String saveMsg(Message msg) throws InterruptedException, ExecutionException {
 		Firestore firestore = FirestoreClient.getFirestore();
-		
+
 		String chatId = setOneToOneChat(msg.getSenderid(), msg.getReceiverId());
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put(msg.getId().toString(), msg);
@@ -95,7 +96,7 @@ public class ChatService {
 
 	}
 
-	/*************SPlitting Keys Of Chat*******/
+	/************* SPlitting Keys Of Chat *******/
 	private List<String> splitKeys(String uid) {
 
 		String str = uid;
@@ -103,15 +104,42 @@ public class ChatService {
 		return strList;
 	}
 
-	public Map<String, Object> getContactUserChats(Long userId, Long contactUserId) throws InterruptedException, ExecutionException {
-		String resultChatkey=setOneToOneChat(userId.toString(), contactUserId.toString());		
+	public Map<String, Object> getContactUserChats(Long userId, Long contactUserId)
+			throws InterruptedException, ExecutionException {
+		String resultChatkey = setOneToOneChat(userId.toString(), contactUserId.toString());
 		Firestore firestore = FirestoreClient.getFirestore();
 		Map<String, Object> map = new HashMap<String, Object>();
-		
 		DocumentReference documentReference = firestore.collection("messages").document(resultChatkey);
 		ApiFuture<DocumentSnapshot> future = documentReference.get();
 		DocumentSnapshot document = future.get();
 		map.put(resultChatkey, document.getData());
 		return map;
+	}
+
+	public boolean deleteMsgById(String msgKey, String msgId) {
+		Firestore firestore = FirestoreClient.getFirestore();
+
+		try {
+			Map<String, Object> deleteSong = new HashMap<>();
+			deleteSong.put(msgKey, FieldValue.delete());
+
+			firestore.collection("messages").document(msgId).update(deleteSong);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public boolean deleteAllContactMsgs(String msgId) {
+		Firestore firestore = FirestoreClient.getFirestore();
+		try {
+			ApiFuture<WriteResult> documentReference = firestore.collection("messages").document(msgId).delete();
+		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 }

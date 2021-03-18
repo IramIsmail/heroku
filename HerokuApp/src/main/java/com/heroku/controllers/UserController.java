@@ -42,12 +42,7 @@ public class UserController {
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
 	
-	/*****
-	 * ---------------------------Save User-----------------------
-	 * @param user
-	 * @param req
-	 * @return
-	 */
+	/**********************************Save User*******************************/
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> save(@RequestBody User user, HttpServletRequest req) {
 		try {
@@ -61,14 +56,7 @@ public class UserController {
 		}
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
-/*****
- * ****************************Login User with device code
- * @param user
- * @param req
- * @return
- * @throws InterruptedException
- * @throws ExecutionException
- */
+/*********************************Login User with device code*************************/
 
 	@RequestMapping(value="authentication",method = RequestMethod.POST)
 	public ResponseEntity<?> authUser(@RequestBody User user, HttpServletRequest req) throws InterruptedException, ExecutionException {
@@ -110,19 +98,18 @@ public class UserController {
 	}*/
 	
 	
-	/*************************Get User***********/
+	    /*************************Get User***********/
 	@RequestMapping(value="{userId}",method = RequestMethod.GET)
 	public ResponseEntity<?> getUser(@PathVariable Long userId) throws InterruptedException, ExecutionException {
-		
-		
 		User user= userService.getUser(userId.toString());
-
-
+		if(user!=null)
 		return new ResponseEntity<User>(user, HttpStatus.OK);
+		else
+			return new ResponseEntity<HttpStatus> (HttpStatus.BAD_REQUEST);
+	
 		}
 	
-/******************************Log out User Code**************************/
-	
+		/******************************Log out User Code**************************/	
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public ResponseEntity<?> logout(@RequestParam("userId") String userId) {
 		if (!userId.equals(null)) {
@@ -131,6 +118,15 @@ public class UserController {
 		} else {
 			return (ResponseEntity<?>) ResponseEntity.badRequest();
 		}
-
 	}
+	
+    /*************************Update User***********/
+	@RequestMapping(method = RequestMethod.PUT)
+	public ResponseEntity<?> update(@RequestBody User user) throws InterruptedException, ExecutionException {
+		if( userService.update(user))
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+		else
+			return new ResponseEntity<HttpStatus> (HttpStatus.BAD_REQUEST);
+	
+		}
 }

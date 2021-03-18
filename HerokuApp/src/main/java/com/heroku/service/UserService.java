@@ -64,4 +64,19 @@ public class UserService {
 		
 	}
 
+	public boolean update(User user) throws InterruptedException, ExecutionException {
+		Firestore dbFirestore = FirestoreClient.getFirestore();		
+		DocumentReference documentReference = dbFirestore.collection("users").document(user.getId().toString());
+		ApiFuture<DocumentSnapshot> future = documentReference.get();
+		DocumentSnapshot document = future.get();		
+		if(document.exists()){
+			ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection("users").document(user.getId().toString()).set(user);
+			collectionApiFuture.get().getUpdateTime().toString();
+		return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 }
